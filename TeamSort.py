@@ -3,8 +3,9 @@ import json
 import types
 
 from cocks import test
+from cocks import preferences
 
-with open("config.json") as json_file:
+with open("data/config.json") as json_file:
   config = json.load(json_file)
 
 
@@ -59,4 +60,4 @@ async def on_message(message):
          await switch[func_name[0]](message, bot)
 
 
-bot.run(config["token"])
+bot.run(config["token"]) #must be last function in file 
