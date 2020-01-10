@@ -26,7 +26,7 @@ def construct_embed():
     embed = discord.Embed(title="Commands help", color=0x405ecf)
 
     for function in get_functions(commands):
-        function_name = functions.__name__
+        function_name = function.__name__
         function_description = function.__doc__.split("\n")
         embed.add_field(name=function_name, value=function_description[0])
 
