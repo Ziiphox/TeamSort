@@ -1,5 +1,6 @@
 import discord
 from cocks import preferences
+from cocks import help_command
 
 
 
@@ -31,11 +32,7 @@ Shows the commands you can access. Use !help [command] to see more in-depth expl
     if (len(cmd) >= 2):
         print
     else:
-        embed = discord.Embed(title="Commands help", color=0x405ecf)
-        for func_name in dir(commands):
-            func_desc = func_name.__doc__.split("\n")
-            embed.add_field(name=func_name, value=func_desc[0])
-        await msg.channel.send(embed=embed)
+        await msg.channel.send(embed = await help_command.construct_embed())
 
 # permission levels:
 # 0 Everyone
