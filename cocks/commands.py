@@ -26,13 +26,13 @@ Set the prefix you want me to listen out for. I will always respond to !help
 
 async def help(msg, bot, cmd):
     """
-Help command.
+Help command
 Shows the commands you can access. Use !help [command] to see more in-depth explination.
     """
-    if (len(cmd) >= 2):
-        print
+    if (len(cmd) == 2):
+        await msg.channel.send(embed = help_command.find_command(cmd[1]))
     else:
-        await msg.channel.send(embed = await help_command.construct_embed())
+        await msg.channel.send(embed = help_command.construct_embed())
 
 # permission levels:
 # 0 Everyone
