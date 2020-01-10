@@ -1,3 +1,4 @@
+import discord
 from cocks import preferences
 
 
@@ -14,7 +15,27 @@ async def setprefix(msg, bot, cmd):
 Set my prefix
 Set the prefix you want me to listen out for. I will always respond to !help
     """
-    print
+    if not (len(cmd) == 2):
+        await msg.channel.send("You need to set a prefix. Example: !setprefix `$`")
+    elif (len(cmd[1]) > 5):
+        await msg.channel.send("Prefix is too long. Use a shorter pefix. Example: `#` `!` `$`")
+    else:
+        await preferences.set_guild_prefix(msg.guild.id, cmd[1])
+        await msg.channel.send(f'Changed prefix to {cmd[1]}')
+
+async def help(msg, bot, cmd):
+    """
+Help command.
+Shows the commands you can access. Use !help [command] to see more in-depth explination.
+    """
+    if (len(cmd) >= 2):
+        print
+    else:
+        embed = discord.Embed(title="Commands help", color=0x405ecf)
+        for func_name in dir(commands):
+            func_desc = func_name.__doc__.split("\n")
+            embed.add_field(name=func_name, value=func_desc[0])
+        await msg.channel.send(embed=embed)
 
 # permission levels:
 # 0 Everyone

@@ -25,3 +25,6 @@ async def get_guild_prefix(id):
 async def setup_guild(id):
     db.execute(f'INSERT INTO guilds VALUES ({id}, \'{config["default_prefix"]}\')')
     guilds.commit()
+
+async def set_guild_prefix(id, prefix):
+    db.execute(f'UPDATE guilds SET prefix=\'{prefix}\' WHERE id={id}')
