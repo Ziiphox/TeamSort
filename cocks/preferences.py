@@ -18,7 +18,7 @@ with open("data/config.json") as json_file:
 
 
 
-async def get_guild_prefix(id):
+def get_guild_prefix(id):
     db.execute(f'SELECT prefix FROM guilds WHERE id={id}')
     return db.fetchone()
 
@@ -28,3 +28,4 @@ async def setup_guild(id):
 
 async def set_guild_prefix(id, prefix):
     db.execute(f'UPDATE guilds SET prefix=\'{prefix}\' WHERE id={id}')
+    guilds.commit()

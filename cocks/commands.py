@@ -5,6 +5,7 @@ from cocks import help_command
 
 
 async def ping(msg, bot, cmd): #The message object from discord, the client object from discord, the cut up message without the prefix
+#Docstrings in functions in this file repersent what to display in the help command. First line is a very short description for when viewing all commands, second line is more descriptive and used when viewing help for a single command
     """
 Ping! Pong!
 Simply responds with Pong!
@@ -32,8 +33,9 @@ Shows the commands you can access. Use !help [command] to see more in-depth expl
     if (len(cmd) == 2):
         await msg.channel.send(embed = help_command.find_command(cmd[1]))
     else:
-        await msg.channel.send(embed = help_command.construct_embed())
+        await msg.channel.send(embed = help_command.construct_embed(msg.guild.id))
 
+# for later
 # permission levels:
 # 0 Everyone
 # 1 has admin perms

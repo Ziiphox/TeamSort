@@ -1,6 +1,7 @@
 import types
 import discord
 from cocks import commands
+from cocks import preferences
 
 
 def get_functions(library):
@@ -23,14 +24,14 @@ def get_functions(library):
     return functions
 
 
-def construct_embed():
+def construct_embed(guild_id):
     embed = discord.Embed(title="Commands help", color=0x405ecf)
 
     for function in get_functions(commands):
         function_name = function.__name__
         function_description = function.__doc__.split("\n")
         embed.add_field(name=f'**{function_name}**', value=function_description[1])
-        
+    embed.set_footer(text=f'My prefix is {preferences.get_guild_prefix(guild_id)[0]}')
     return embed
 
 
@@ -38,7 +39,6 @@ def find_command(command):
     embed = discord.Embed(title="Command help", color=0x405ecf)
 
     for function in get_functions(commands):
-        print(f'{function.__name__}  ||  {command}')
         if (function.__name__ == command):
             function_description = function.__doc__.split("\n")
             embed.add_field(name=f'**{function.__name__}**', value=function_description[2])
