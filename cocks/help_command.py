@@ -31,7 +31,7 @@ def construct_embed(guild_id):
         function_name = function.__name__
         function_description = function.__doc__.split("\n")
         embed.add_field(name=f'**{function_name}**', value=function_description[1])
-    embed.set_footer(text=f'My prefix is {preferences.get_guild_prefix(guild_id)[0]}')
+    embed.set_footer(text=f'My prefix is {preferences.get_guild_prefix(guild_id)}\nI will always respond to !help')
     return embed
 
 

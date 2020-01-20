@@ -20,7 +20,7 @@ with open("data/config.json") as json_file:
 
 def get_guild_prefix(id):
     db.execute(f'SELECT prefix FROM guilds WHERE id={id}')
-    return db.fetchone()
+    return db.fetchone()[0]
 
 async def setup_guild(id):
     db.execute(f'INSERT INTO guilds VALUES ({id}, \'{config["default_prefix"]}\')')

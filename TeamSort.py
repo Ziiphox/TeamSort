@@ -54,12 +54,12 @@ switch = {function.__name__: function for function in get_functions(commands)}
 async def on_message(message):
     #big spaghetti block for testing if the guild exists and changing the prefix
     if (preferences.get_guild_prefix(message.guild.id)):
+
         if (message.content.lower() == f'{config["default_prefix"]}help'): #In case you forget the bot's prefix.
             await commands.help(message, bot, message.content.lower()[len(config["default_prefix"]):].split())
             return
-        
+
         if not (message.content.startswith(preferences.get_guild_prefix(message.guild.id))): #Return if message doesn't start with guild prefix
-            print(preferences.get_guild_prefix(message.guild.id))
             return
         
         func_name = message.content.lower()[len(preferences.get_guild_prefix(message.guild.id)):].split()
