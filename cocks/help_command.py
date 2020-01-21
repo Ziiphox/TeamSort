@@ -4,6 +4,7 @@ from cocks import commands
 from cocks import preferences
 
 
+#STOLEN CODE LOL
 def get_functions(library):
     # Getting a list of all the functions
     # that nunchi bot supports for a

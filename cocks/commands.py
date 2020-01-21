@@ -20,7 +20,7 @@ Set the prefix you want me to listen out for. I will always respond to !help
     if not (len(cmd) == 2):
         await msg.channel.send("You need to set a prefix. Example: !setprefix `$`")
     elif (len(cmd[1]) > 5):
-        await msg.channel.send("Prefix is too long. Use a shorter pefix. Example: `#` `!` `$`")
+        await msg.channel.send("Prefix is too long. Use a shorter pefix. Example: `!` `##` `abc`")
     else:
         await preferences.set_guild_prefix(msg.guild.id, cmd[1])
         await msg.channel.send(f'Changed prefix to {cmd[1]}')
