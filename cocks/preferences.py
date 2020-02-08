@@ -1,32 +1,11 @@
 import sqlite3
 import json
-import types
 from os import path
 from cocks import commands
+from cocks import tools
 
 with open("data/config.json") as json_file:
   config = json.load(json_file)
-
-#STOLEN CODE LOL
-def get_functions(library):
-    # Getting a list of all the functions
-    # that nunchi bot supports for a
-    # message event.
-    functions = []
-
-    for attr_name in dir(library):
-        # Getting one of the objects that message_actions 
-        # has declared.
-        library_object = getattr(library, attr_name)
-
-        # Checking whether is a function defined
-        # inside message_actions or if it belongs
-        # to a library that was imported.
-        if isinstance(library_object, types.FunctionType):
-            functions.append(library_object)
-    
-    return functions
-
 
 
 
@@ -35,7 +14,7 @@ def get_guild_prefix(id):
     db.execute(f'SELECT prefix FROM guilds WHERE id={id}')
     prefix = db.fetchone()
     if not (prefix == None):
-        return prefix
+        return prefix[0]
     else:
         return False
 
@@ -53,25 +32,22 @@ async def set_guild_prefix(id, prefix):
 # Admin-y type tools |
 #                    V
 
-def add_command_column(command):
-    db.execute(f'ALTER TABLE commands ADD {command} real')
+def add_command_column(name):
+    db.execute(f'ALTER TABLE commands ADD {name} real')
+    print(f'Adding {name} column to commands table')
 
-def remove_command_column(command):
-    db.execute(f'ALTER TABLE commands DROP COLUMN {command}')
+def remove_command_column(name):
+    db.execute(f'ALTER TABLE commands DROP COLUMN {name}')
+    print(f'Removing {name} column from commands table')
 
 def check_command_columns():
     db.execute('PRAGMA table_info(commands)')
-    rows = db.fetchall()
-    print(rows)
-    print(get_functions(commands))
-    for function in get_functions(commands):
-        if not (function in rows[1]):
-            print("a")
-        else:
-            print("b")
-        print("#######")
-
-
+    columns = db.fetchall()
+    # Compares function name to all column names in commands table, if any of them match then compare the next function name..
+    for function in tools.get_functions(commands):
+        if not (any(function.__name__ == column[1] for column in columns)):
+            add_command_column(function.__name__)
+    guilds.commit()
 
 
 
@@ -85,4 +61,3 @@ else:
     db.execute('CREATE TABLE guilds (id text, prefix text, PRIMARY KEY (id) )')
     db.execute('CREATE TABLE commands (id text, PRIMARY KEY (id) )')
     guilds.commit()
-    check_command_columns()
